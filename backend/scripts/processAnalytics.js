@@ -32,7 +32,7 @@ async function processAnalytics() {
 
   try {
     // Read PancakeSwap swap data
-    const swapDataPath = path.join(__dirname, '../../', DATA_PATHS.PANCAKESWAP_SWAPS);
+    const swapDataPath = path.join(__dirname, DATA_PATHS.PANCAKESWAP_SWAPS);
     console.log(`📖 Reading swap data from: ${swapDataPath}`);
 
     let swapData;
@@ -228,7 +228,7 @@ async function processAnalytics() {
 
     // Save analytics
     console.log('💾 Saving analytics data...');
-    const outputPath = path.join(__dirname, '../../', DATA_PATHS.ANALYTICS);
+    const outputPath = path.join(__dirname, DATA_PATHS.ANALYTICS);
     await fs.writeFile(outputPath, JSON.stringify(analytics, null, 2));
     console.log(`✅ Analytics saved to: ${outputPath}\n`);
 
