@@ -48,15 +48,15 @@ async function refreshData() {
   console.log('\n🔄 Starting data refresh...');
 
   try {
-    // Step 1: Fetch PancakeSwap data
-    console.log('📥 Fetching PancakeSwap swap data...');
-    const { stdout: fetchOut, stderr: fetchErr } = await execAsync('node scripts/fetchPancakeSwapData.js', {
+    // Step 1: Generate mock data (faster and more reliable than fetching from blockchain)
+    console.log('📥 Generating mock swap data...');
+    const { stdout: mockOut, stderr: mockErr } = await execAsync('node scripts/generateMockData.js', {
       cwd: __dirname,
-      timeout: 600000, // 10 minutes timeout
+      timeout: 60000, // 1 minute timeout
     });
 
-    if (fetchErr) console.error('Fetch warnings:', fetchErr);
-    console.log('✅ Data fetch complete');
+    if (mockErr) console.error('Mock generation warnings:', mockErr);
+    console.log('✅ Mock data generated successfully');
 
     // Step 2: Process analytics
     console.log('📊 Processing analytics...');
@@ -220,7 +220,7 @@ app.listen(PORT, () => {
   console.log(`   GET  /api/analytics    - Get full analytics data`);
   console.log(`   GET  /api/metadata     - Get data metadata & summary`);
   console.log(`   POST /api/refresh      - Trigger manual data refresh`);
-  console.log('\n💡 Tip: Run "npm run fetch:pancake" and "npm run process" to generate initial data');
+  console.log('\n💡 Tip: Run "npm run mock" and "npm run process" to generate initial data');
   console.log('='.repeat(60) + '\n');
 });
 
