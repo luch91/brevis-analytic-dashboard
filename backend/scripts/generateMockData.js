@@ -107,14 +107,16 @@ async function generateMockData() {
   };
 
   // Save to file
-  const dataDir = path.join(__dirname, '../../data');
+  const outputPath = path.join(__dirname, DATA_PATHS.PANCAKESWAP_SWAPS);
+  const dataDir = path.dirname(outputPath);
+
+  // Ensure data directory exists
   try {
     await fs.access(dataDir);
   } catch {
     await fs.mkdir(dataDir, { recursive: true });
   }
 
-  const outputPath = path.join(__dirname, DATA_PATHS.PANCAKESWAP_SWAPS);
   await fs.writeFile(outputPath, JSON.stringify(output, null, 2));
 
   console.log(`💾 Mock data saved to: ${outputPath}`);

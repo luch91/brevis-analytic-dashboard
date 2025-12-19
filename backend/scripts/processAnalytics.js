@@ -229,6 +229,15 @@ async function processAnalytics() {
     // Save analytics
     console.log('💾 Saving analytics data...');
     const outputPath = path.join(__dirname, DATA_PATHS.ANALYTICS);
+    const dataDir = path.dirname(outputPath);
+
+    // Ensure data directory exists
+    try {
+      await fs.access(dataDir);
+    } catch {
+      await fs.mkdir(dataDir, { recursive: true });
+    }
+
     await fs.writeFile(outputPath, JSON.stringify(analytics, null, 2));
     console.log(`✅ Analytics saved to: ${outputPath}\n`);
 
