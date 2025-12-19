@@ -80,11 +80,11 @@ export const ABIS = {
   ],
 };
 
-// Data Storage Paths (relative to project root)
+// Data Storage Paths (relative to backend folder)
 export const DATA_PATHS = {
-  RAW_BREVIS_EVENTS: '../data/raw-events.json',
-  PANCAKESWAP_SWAPS: '../data/pancakeswap-swaps.json',
-  ANALYTICS: '../data/analytics.json',
+  RAW_BREVIS_EVENTS: './data/raw-events.json',
+  PANCAKESWAP_SWAPS: './data/pancakeswap-swaps.json',
+  ANALYTICS: './data/analytics.json',
 };
 
 // Export default config object
