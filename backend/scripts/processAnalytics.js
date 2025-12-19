@@ -31,8 +31,8 @@ async function processAnalytics() {
   console.log('🔄 Starting analytics processing...\n');
 
   try {
-    // Read PancakeSwap swap data
-    const swapDataPath = path.join(__dirname, DATA_PATHS.PANCAKESWAP_SWAPS);
+    // Read PancakeSwap swap data (go up to backend folder, then to data path)
+    const swapDataPath = path.join(__dirname, '..', DATA_PATHS.PANCAKESWAP_SWAPS);
     console.log(`📖 Reading swap data from: ${swapDataPath}`);
 
     let swapData;
@@ -226,9 +226,9 @@ async function processAnalytics() {
       volumeDistribution,
     };
 
-    // Save analytics
+    // Save analytics (go up to backend folder, then to data path)
     console.log('💾 Saving analytics data...');
-    const outputPath = path.join(__dirname, DATA_PATHS.ANALYTICS);
+    const outputPath = path.join(__dirname, '..', DATA_PATHS.ANALYTICS);
     const dataDir = path.dirname(outputPath);
 
     // Ensure data directory exists

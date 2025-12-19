@@ -106,8 +106,8 @@ async function generateMockData() {
     swaps,
   };
 
-  // Save to file
-  const outputPath = path.join(__dirname, DATA_PATHS.PANCAKESWAP_SWAPS);
+  // Save to file (go up to backend folder, then to data path)
+  const outputPath = path.join(__dirname, '..', DATA_PATHS.PANCAKESWAP_SWAPS);
   const dataDir = path.dirname(outputPath);
 
   // Ensure data directory exists
