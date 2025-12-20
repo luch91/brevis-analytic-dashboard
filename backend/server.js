@@ -209,19 +209,51 @@ cron.schedule(CRON_SCHEDULE, async () => {
 // Start Server
 // ============================================================================
 
-app.listen(PORT, () => {
+// Helper function to check if data files exist
+async function checkDataExists() {
+  try {
+    const analyticsPath = path.join(__dirname, DATA_PATHS.ANALYTICS);
+    await fs.access(analyticsPath);
+    return true;
+  } catch {
+    return false;
+  }
+}
+
+// Initialize server with data generation if needed
+async function startServer() {
   console.log('\n' + '='.repeat(60));
   console.log('🚀 PancakeSwap Analytics Dashboard - Backend Server');
   console.log('='.repeat(60));
-  console.log(`\n✅ Server running on http://localhost:${PORT}`);
-  console.log(`⏰ Auto-refresh schedule: ${CRON_SCHEDULE} (UTC)`);
-  console.log('\n📊 Available API Endpoints:');
-  console.log(`   GET  /health           - Health check`);
-  console.log(`   GET  /api/analytics    - Get full analytics data`);
-  console.log(`   GET  /api/metadata     - Get data metadata & summary`);
-  console.log(`   POST /api/refresh      - Trigger manual data refresh`);
-  console.log('\n💡 Tip: Run "npm run mock" and "npm run process" to generate initial data');
-  console.log('='.repeat(60) + '\n');
+
+  // Check if data exists, generate if missing
+  const dataExists = await checkDataExists();
+
+  if (!dataExists) {
+    console.log('\n⚠️  No data files found. Generating initial data...');
+    await refreshData();
+    console.log('✅ Initial data generation complete\n');
+  } else {
+    console.log('\n✅ Existing data files found\n');
+  }
+
+  // Start listening for requests
+  app.listen(PORT, () => {
+    console.log(`✅ Server running on http://localhost:${PORT}`);
+    console.log(`⏰ Auto-refresh schedule: ${CRON_SCHEDULE} (UTC)`);
+    console.log('\n📊 Available API Endpoints:');
+    console.log(`   GET  /health           - Health check`);
+    console.log(`   GET  /api/analytics    - Get full analytics data`);
+    console.log(`   GET  /api/metadata     - Get data metadata & summary`);
+    console.log(`   POST /api/refresh      - Trigger manual data refresh`);
+    console.log('='.repeat(60) + '\n');
+  });
+}
+
+// Start the server
+startServer().catch(err => {
+  console.error('❌ Failed to start server:', err);
+  process.exit(1);
 });
 
 // Graceful shutdown
